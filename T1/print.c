@@ -1,6 +1,6 @@
 #include "chess.h"
 
-void print_chessboard(){
+void print(){
     //TODO: ADD YOUR CODE HERE
 
 }
