@@ -147,7 +147,7 @@ int succ(int x, int goal) {
 void print(int x,int dep){
 	if(tree[x].l!=0)print(tree[x].l,dep+1);
 	for(int i=1;i<=dep;i++)printf("-");
-	printf("%d\n",tree[x].data);
+	printf("(%d)\n",tree[x].data);
 	if(tree[x].r!=0)print(tree[x].r,dep+1);
 }
 
