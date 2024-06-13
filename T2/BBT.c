@@ -156,6 +156,14 @@ int main() {
 	srand(71806291);
 	T = read();
 	for (int nt = 1; nt <= T; ++nt) {
+		//打印输入提示
+		printf("Please input the operation type and the number:\n");
+		printf("1: insert\n");
+		printf("2: delete\n");
+		printf("3: find the k-th number\n");
+		printf("4: find the rank of the number\n");
+		printf("5: find the predecessor\n");
+		printf("6: find the successor\n");
 		int opt = read(), xx = read();
 		switch (opt) {
 			case 1:
@@ -177,6 +185,8 @@ int main() {
 				printf("%d\n", succ(root, xx));
 				break;
 		}
+		printf("current tree is :\n");
+		print(root,0);
 	}
 	return 0;
 }
