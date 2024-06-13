@@ -1,12 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "BBT.h"
 
-#define MAXN 100010
-
-struct treap {
-	int val, data, l, r, size;
-};
 
 int cnt, T, root;
 struct treap tree[MAXN];
@@ -149,6 +142,13 @@ int succ(int x, int goal) {
 			return lnum;
 		}
 	}
+}
+
+void print(int x,int dep){
+	if(tree[x].l!=0)print(tree[x].l,dep+1);
+	for(int i=1;i<=dep;i++)printf(" ");
+	printf("%d\n",tree[x].data);
+	if(tree[x].r!=0)print(tree[x].r,dep+1);
 }
 
 int main() {
