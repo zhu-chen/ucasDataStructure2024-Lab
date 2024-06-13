@@ -146,7 +146,7 @@ int succ(int x, int goal) {
 
 void print(int x,int dep){
 	if(tree[x].l!=0)print(tree[x].l,dep+1);
-	for(int i=1;i<=dep;i++)printf(" ");
+	for(int i=1;i<=dep;i++)printf("-");
 	printf("%d\n",tree[x].data);
 	if(tree[x].r!=0)print(tree[x].r,dep+1);
 }
@@ -154,8 +154,7 @@ void print(int x,int dep){
 int main() {
 	memset(tree, 0, sizeof(tree));
 	srand(71806291);
-	T = read();
-	for (int nt = 1; nt <= T; ++nt) {
+	while(1) {
 		//打印输入提示
 		printf("Please input the operation type and the number:\n");
 		printf("1: insert\n");
@@ -164,6 +163,7 @@ int main() {
 		printf("4: find the rank of the number\n");
 		printf("5: find the predecessor\n");
 		printf("6: find the successor\n");
+		printf("-1: exit\n");
 		int opt = read(), xx = read();
 		switch (opt) {
 			case 1:
@@ -184,9 +184,27 @@ int main() {
 			case 6:
 				printf("%d\n", succ(root, xx));
 				break;
+			case -1:
+				return 0;
+			default:
+				printf("Invalid operation type!\n");
+				break;
 		}
 		printf("current tree is :\n");
 		print(root,0);
 	}
 	return 0;
 }
+/*
+10
+1 106465
+4 1
+1 317721
+1 460929
+1 644985
+1 84185
+1 89851
+6 81968
+1 492737
+5 493598
+*/
