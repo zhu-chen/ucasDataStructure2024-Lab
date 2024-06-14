@@ -18,7 +18,7 @@ void print_chessboard();
 typedef struct corrrdinate{
     int x;
     int y;
-    int visited;
+    int visited[8];
 }corrdinate;
 typedef corrdinate SElemType;
 typedef struct{
@@ -31,3 +31,6 @@ int pop(Sqstack *S,SElemType *e);
 int InitStack(Sqstack *S);
 int GetTop(Sqstack *S,SElemType *e);
 int StackLength(Sqstack S);
+
+int Initvisited(corrdinate *a);
+int count(corrdinate a);
