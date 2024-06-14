@@ -11,7 +11,7 @@ const int SCREEN_HEIGHT = 640;
 const int BOARD_SIZE = 8;
 const int SQUARE_SIZE = SCREEN_WIDTH / BOARD_SIZE;
 
-void print_chessboard();
+void printChessboard();
 
 #define STACK_INIT_SIZE 100
 #define STACKINCREMENT 10
