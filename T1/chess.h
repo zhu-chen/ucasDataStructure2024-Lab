@@ -7,11 +7,20 @@ extern int chessboard[8][8];
 
 void print_chessboard();
 
-#define STACK_INIT_SIZE 100
-#define STACKINCREMENT 10
+#ifndef TEST
+#define TEST 1
+#define STACK_INIT_SIZE 10000
+#define STACKINCREMENT 1000
 #define ERROR 0
 #define OK 1
-typedef char SElemType;
+#endif
+
+typedef struct corrrdinate{
+    int x;
+    int y;
+    int visited;
+}corrdinate;
+typedef corrdinate SElemType;
 typedef struct{
     SElemType *base;
     SElemType *top;
@@ -21,6 +30,7 @@ int push(Sqstack *S ,SElemType e);
 int pop(Sqstack *S,SElemType *e);
 int InitStack(Sqstack *S);
 int GetTop(Sqstack *S,SElemType *e);
+int StackLength(Sqstack S);
 int InitStack(Sqstack *S)
 {
     S->base=(SElemType*)malloc(STACK_INIT_SIZE*sizeof(SElemType));
@@ -58,4 +68,8 @@ int GetTop(Sqstack *S,SElemType *e)
     return ERROR;
     *e=*(S->top-1);
     return OK;
+}
+int StackLength(Sqstack S)
+{
+    return S.top-S.base;
 }
