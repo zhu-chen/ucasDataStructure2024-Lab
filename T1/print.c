@@ -1,8 +1,5 @@
 #include "chess.h"
 
-#include <SDL2/SDL_ttf.h>
-
-
 const int SQUARE_SIZE = 50; // 每个棋盘格的大小
 const int BOARD_SIZE = 8; // 棋盘的大小
 
@@ -19,19 +16,6 @@ int main(int argc, char* args[]) {
         } else {
             screenSurface = SDL_GetWindowSurface(window);
 
-            // 初始化SDL_ttf库
-            if (TTF_Init() == -1) {
-                printf("TTF_Init: %s\n", TTF_GetError());
-                exit(2);
-            }
-
-            // 打开字体文件
-            TTF_Font* font = TTF_OpenFont("arial.ttf", 24);
-            if (font == NULL) {
-                printf("TTF_OpenFont: %s\n", TTF_GetError());
-                // handle error
-            }
-
             for (int i = 0; i < BOARD_SIZE; ++i) {
                 for (int j = 0; j < BOARD_SIZE; ++j) {
                     SDL_Rect rect;
@@ -46,35 +30,20 @@ int main(int argc, char* args[]) {
                     } else {
                         SDL_FillRect(screenSurface, &rect, SDL_MapRGB(screenSurface->format, 0x00, 0x00, 0x00)); // 黑色
                     }
-
-                    // 创建一个包含数字的表面
-                    char text[2];
-                    sprintf(text, "%d", i * BOARD_SIZE + j);
-                    SDL_Color textColor = {0, 0, 0};
-                    SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, textColor);
-
-                    // 将文本表面绘制到屏幕上
-                    SDL_BlitSurface(textSurface, NULL, screenSurface, &rect);
-
-                    // 释放文本表面
-                    SDL_FreeSurface(textSurface);
                 }
-            }
+             }
 
             SDL_UpdateWindowSurface(window);
 
             // 等待两秒
-            SDL_Delay(5000);
-
-            // 释放字体
-            TTF_CloseFont(font);
-        }
+            SDL_Delay(2000);
+         }
     }
 
     SDL_DestroyWindow(window);
     SDL_Quit();
 
-    return 0;
+     return 0;
 }
 void print(){
     //TODO: ADD YOUR CODE HERE
