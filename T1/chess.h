@@ -13,11 +13,20 @@ const int SQUARE_SIZE = SCREEN_WIDTH / BOARD_SIZE;
 
 void printChessboard();
 
-#define STACK_INIT_SIZE 100
-#define STACKINCREMENT 10
+#ifndef TEST
+#define TEST 1
+#define STACK_INIT_SIZE 10000
+#define STACKINCREMENT 1000
 #define ERROR 0
 #define OK 1
-typedef char SElemType;
+#endif
+
+typedef struct corrrdinate{
+    int x;
+    int y;
+    int visited;
+}corrdinate;
+typedef corrdinate SElemType;
 typedef struct{
     SElemType *base;
     SElemType *top;
@@ -27,41 +36,4 @@ int push(Sqstack *S ,SElemType e);
 int pop(Sqstack *S,SElemType *e);
 int InitStack(Sqstack *S);
 int GetTop(Sqstack *S,SElemType *e);
-int InitStack(Sqstack *S)
-{
-    S->base=(SElemType*)malloc(STACK_INIT_SIZE*sizeof(SElemType));
-    if(!S->base) 
-    return ERROR;
-    S->top=S->base;
-    S->stacksize=STACK_INIT_SIZE;
-    return OK;
-}
-int push(Sqstack *S,SElemType e)
-{
-    if(S->top-S->base>=S->stacksize)
-    {
-        S->base=(SElemType*)realloc(S->base, (S->stacksize+ STACKINCREMENT )*sizeof(SElemType));
-        if(!S->base)
-        return ERROR;
-    S->top=S->base+S->stacksize;
-    S->stacksize+=STACKINCREMENT;
-    }
-    *(S->top++) =e; 
-    return OK; 
-}
-int pop(Sqstack *S,SElemType *e)
-{
-    if(S->top==S->base)
-    {
-        return ERROR;
-    }
-    *e=*--(S->top);
-    return OK;
-}
-int GetTop(Sqstack *S,SElemType *e)
-{
-    if(S->top==S->base)
-    return ERROR;
-    *e=*(S->top-1);
-    return OK;
-}
+int StackLength(Sqstack S);
