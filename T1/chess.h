@@ -1,9 +1,15 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <malloc.h>
 
 extern int chessboard[8][8];
+
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 640;
+const int BOARD_SIZE = 8;
+const int SQUARE_SIZE = SCREEN_WIDTH / BOARD_SIZE;
 
 void print_chessboard();
 
