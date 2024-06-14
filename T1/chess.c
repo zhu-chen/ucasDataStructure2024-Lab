@@ -38,6 +38,49 @@ void jump_horse(corrdinate* a,corrdinate* b)//这个函数描述的是马每次�
 }
 
 
+int InitStack(Sqstack *S)
+{
+    S->base=(SElemType*)malloc(STACK_INIT_SIZE*sizeof(SElemType));
+    if(!S->base) 
+    return ERROR;
+    S->top=S->base;
+    S->stacksize=STACK_INIT_SIZE;
+    return OK;
+}
+int push(Sqstack *S,SElemType e)
+{
+    if(S->top-S->base>=S->stacksize)
+    {
+        S->base=(SElemType*)realloc(S->base, (S->stacksize+ STACKINCREMENT )*sizeof(SElemType));
+        if(!S->base)
+        return ERROR;
+    S->top=S->base+S->stacksize;
+    S->stacksize+=STACKINCREMENT;
+    }
+    *(S->top++) =e; 
+    return OK; 
+}
+int pop(Sqstack *S,SElemType *e)
+{
+    if(S->top==S->base)
+    {
+        return ERROR;
+    }
+    *e=*--(S->top);
+    return OK;
+}
+int GetTop(Sqstack *S,SElemType *e)
+{
+    if(S->top==S->base)
+    return ERROR;
+    *e=*(S->top-1);
+    return OK;
+}
+int StackLength(Sqstack S)
+{
+    return S.top-S.base;
+}
+
 int main(){
     //TODO: ADD YOUR CODE HERE
     for(int i=0;i<8;i++)
