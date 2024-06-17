@@ -66,7 +66,7 @@ int main(){
     corrdinate start,next;
     scanf("%d %d",&(start.x),&(start.y));
     Initvisited(&start);
-   // init();
+    init();
     while(StackLength(*S)<63)
     {
         chessboard[start.x][start.y]=StackLength(*S)+1;

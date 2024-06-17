@@ -7,7 +7,8 @@
 
 extern int chessboard[8][8];
 
-int print();
+void print();
+int init();
 
 #ifndef TEST
 #define TEST 1
