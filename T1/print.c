@@ -6,6 +6,7 @@ const int BOARD_SIZE = 8;   // 棋盘的大小
 SDL_Window* window = NULL;
 SDL_Surface* screenSurface = NULL;
 TTF_Font* font = NULL;
+SDL_Surface* horseSurface = NULL;
 
 int init() {
     // 初始化SDL
@@ -45,10 +46,25 @@ int init() {
         return -1;
     }
 
+     // 初始化SDL_image库
+    int imgFlags = IMG_INIT_PNG;
+    if (!(IMG_Init(imgFlags) & imgFlags)) {
+        printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+        SDL_DestroyWindow(window);
+        SDL_Quit();
+        return -1;
+    }
+
     return 0;
 }
 
 void print() {
+    int max = 0;
+    for (int i = 0; i < BOARD_SIZE; i++)
+        for (int j = 0; j < BOARD_SIZE; j++)
+            if (chessboard[i][j] > max)
+                max = chessboard[i][j];
+
     for (int i = 0; i < BOARD_SIZE; ++i) {
         for (int j = 0; j < BOARD_SIZE; ++j) {
             SDL_Rect rect;
@@ -64,6 +80,37 @@ void print() {
                 SDL_FillRect(screenSurface, &rect, SDL_MapRGB(screenSurface->format, 0x00, 0x00, 0x00)); // 黑色
             }
 
+            if (chessboard[i][j] == max) {
+                SDL_Surface* loadedSurface = IMG_Load("horse.png");
+                if (loadedSurface == NULL) {
+                    printf("Unable to load image! SDL_image Error: %s\n", IMG_GetError());
+                } else {
+                    // 缩放马的图像大小为原始大小的1/5
+                    SDL_Surface* scaledSurface = SDL_CreateRGBSurface(0, loadedSurface->w / 4, loadedSurface->h / 4, 32, 0, 0, 0, 0);
+                    SDL_BlitScaled(loadedSurface, NULL, scaledSurface, NULL);
+
+                    // 将缩放后的马的图像转换为窗口表面的格式
+                    SDL_Surface* optimizedSurface = SDL_ConvertSurface(scaledSurface, screenSurface->format, 0);
+                    if (optimizedSurface == NULL) {
+                        printf("Unable to optimize image surface! SDL Error: %s\n", SDL_GetError());
+                    } else {
+                        // 设置马的位置
+                        SDL_Rect horseRect;
+                        horseRect.x = rect.x + (SQUARE_SIZE - optimizedSurface->w) / 2;
+                        horseRect.y = rect.y + (SQUARE_SIZE - optimizedSurface->h) / 2;
+                        horseRect.w = optimizedSurface->w;
+                        horseRect.h = optimizedSurface->h;
+
+                        // 将马的图像绘制到屏幕表面上
+                        SDL_BlitSurface(optimizedSurface, NULL, screenSurface, &horseRect);
+                    }
+
+                SDL_FreeSurface(scaledSurface);
+                SDL_FreeSurface(optimizedSurface);
+                SDL_FreeSurface(loadedSurface); // 释放加载的图片表面
+                }  
+            }
+            else {
             // 在格子中间显示数字
             if (chessboard[i][j] != 0) { // 0表示未访问过的格子，不显示数字
                 SDL_Color textColor = {0, 0, 0};
@@ -99,11 +146,15 @@ void print() {
 
                 //TTF_CloseFont(font); // 关闭字体
             }
+            }
         }
     }
 
     SDL_UpdateWindowSurface(window);
-    SDL_Delay(1000); // 等待两秒
+    if (max != 64)
+        SDL_Delay(1000); // 等待一秒
+    else if (max == 64)
+        SDL_Delay(10000); // 等待十秒
 
     // 清理SDL和SDL_ttf
     //TTF_Quit();
