@@ -66,13 +66,16 @@ int main(){
     corrdinate start,next;
     scanf("%d %d",&(start.x),&(start.y));
     Initvisited(&start);
+   // init();
     while(StackLength(*S)<63)
     {
         chessboard[start.x][start.y]=StackLength(*S)+1;
+        print();
         jump_horse(&start,&next);
         while(next.x==-1)
         {
             chessboard[start.x][start.y]=0;
+            print();
             pop(S,&start);
             if(StackLength(*S)==0&&count(start)==0)
             {
@@ -85,15 +88,7 @@ int main(){
         start=next;
     }
     chessboard[start.x][start.y]=64;
-    for(int i=0;i<8;i++)
-    {
-        for(int j=0;j<8;j++)
-        {
-            printf("%d ",chessboard[i][j]);
-        }
-        printf("\n");
-    }
-    //print_chessboard();
+    print();
     return 0;
 }
 

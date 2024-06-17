@@ -1,23 +1,22 @@
 #include "chess.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
 
 const int SQUARE_SIZE = 50; // 每个棋盘格的大小
 const int BOARD_SIZE = 8;   // 棋盘的大小
 
 // 假设已知的棋盘数组，用于示例
-int chessboard[8][8] = {
-    {1, 2, 3, 4, 5, 6, 7, 8},
-    {9, 10, 11, 12, 13, 14, 15, 16},
-    {17, 18, 19, 20, 21, 22, 23, 24},
-    {25, 26, 27, 28, 29, 30, 31, 32},
-    {33, 34, 35, 36, 37, 38, 39, 40},
-    {41, 42, 43, 44, 45, 46, 47, 48},
-    {49, 50, 51, 52, 53, 54, 55, 56},
-    {57, 58, 59, 60, 61, 62, 63, 64}
-};
+// int chessboard[8][8] = {
+//     {1, 2, 3, 4, 5, 6, 7, 8},
+//     {9, 10, 11, 12, 13, 14, 15, 16},
+//     {17, 18, 19, 20, 21, 22, 23, 24},
+//     {25, 26, 27, 28, 29, 30, 31, 32},
+//     {33, 34, 35, 36, 37, 38, 39, 40},
+//     {41, 42, 43, 44, 45, 46, 47, 48},
+//     {49, 50, 51, 52, 53, 54, 55, 56},
+//     {57, 58, 59, 60, 61, 62, 63, 64}
+// };
 
-int main(int argc, char* args[]) {
+
+int print(int argc, char* args[]) {
     SDL_Window* window = NULL;
     SDL_Surface* screenSurface = NULL;
 
@@ -50,12 +49,22 @@ int main(int argc, char* args[]) {
                         }
 
                         // 在格子中间显示数字
-                        SDL_Color textColor = {255, 255, 255}; // 白色字体
+                        if(chessboard[i][j] == 0) continue; // 0表示未访问过的格子，不显示数字
+                       SDL_Color textColor = {0,0,0};
+if((i+j)%2==0) {
+    textColor.r = 0;
+    textColor.g = 0;
+    textColor.b = 0; // 白色字体
+} else {
+    textColor.r = 255;
+    textColor.g = 255;
+    textColor.b = 255; // 黑色字体
+}
                         SDL_Surface* textSurface = NULL;
                         SDL_Texture* textTexture = NULL;
 
                         // 创建文本
-                        char text[2]; // 存放单个字符数字 + 终止符
+                        char text[3]; // 存放单个字符数字 + 终止符
                         snprintf(text, sizeof(text), "%d", chessboard[i][j]);
 
                         // 使用SDL_ttf库加载字体文件和设置字体大小
@@ -86,7 +95,7 @@ int main(int argc, char* args[]) {
                 SDL_UpdateWindowSurface(window);
 
                 // 等待两秒
-                SDL_Delay(2000);
+                SDL_Delay(500);
             }
 
             TTF_Quit(); // 退出SDL_ttf库
